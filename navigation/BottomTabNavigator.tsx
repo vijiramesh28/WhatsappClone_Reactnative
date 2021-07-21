@@ -4,40 +4,68 @@
  */
 
 import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import * as React from 'react';
-
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import TabThreeScreen from '../screens/TabThreeScreen';
+import TabFourScreen from '../screens/TabFourNavigator';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList,TabThreeParamList,TabFourParamList } from '../types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialTopTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
+    
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      initialRouteName="TabTwo"
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].background, style:{
+        backgroundColor: Colors.light.headerColor, 
+      },showIcon: true, labelStyle:{fontWeight:'bold', fontSize:16}, indicatorStyle:{backgroundColor:Colors[colorScheme].background, height:4}}}
+      >
       <BottomTab.Screen
         name="TabOne"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="camera" color={color} size={25} />,
+          tabBarLabel: () =>null
+          
         }}
       />
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          title:'CHATS'
         }}
       />
+
+      <BottomTab.Screen
+              name="TabThree"
+              component={TabThreeNavigator}
+              options={{     
+                title:'STATUS'
+              }}
+            />
+
+    <BottomTab.Screen
+                  name="TabFour"
+                  component={TabFourNavigator}
+                  options={{     
+                    title:'CALLS'
+                  }}
+                />
     </BottomTab.Navigator>
+
+
+    
+
   );
 }
 
@@ -53,11 +81,11 @@ const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
   return (
-    <TabOneStack.Navigator>
+    <TabOneStack.Navigator headerMode='none'>
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+        
       />
     </TabOneStack.Navigator>
   );
@@ -67,12 +95,39 @@ const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {
   return (
-    <TabTwoStack.Navigator>
+    <TabTwoStack.Navigator headerMode='none'>
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+     
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+
+const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+function TabThreeNavigator() {
+  return (
+    <TabThreeStack.Navigator headerMode='none'>
+      <TabThreeStack.Screen
+        name="TabThreeScreen"
+        component={TabThreeScreen}
+      />
+    </TabThreeStack.Navigator>
+  );
+}
+
+const TabFourStack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator headerMode='none'>
+      <TabFourStack.Screen
+        name="TabFourScreen"
+        component={TabFourScreen}
+      />
+    </TabFourStack.Navigator>
   );
 }
